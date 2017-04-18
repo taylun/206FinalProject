@@ -163,7 +163,7 @@ Titanic= Movie(get_movie_data("Titanic"))
 t_data= [(Titanic.title, Titanic.director, Titanic.num_languages, Titanic.IMDB_rating, Titanic.actors.split()[0], Titanic.plot)]
 
 for item in t_data:
-	print(item)
+	#print(item)
 	cur.execute(s, item)
 
 
@@ -192,17 +192,17 @@ conn.commit()
 
 
 # Write your test cases here.
-"""
+
 class CachingTests(unittest.TestCase):
 	def test_TheOutsiders_caching(self):
-		cache= open("206finalproject_cache.json", "r")).read()
+		cache= open("206finalproject_cache.json", "r").read()
 		self.assertTrue("The Outsiders" in cache)
-"""		
+		
 
 
 class Get_Movie_Tweets_test(unittest.TestCase):
 	def test_response_type(self):
-		test= get_movie_tweets("umich")
+		test= get_tweets("umich")
 		self.assertEqual(type(test), type({}))
 	
 			
@@ -211,14 +211,14 @@ class Get_Movie_Tweets_test(unittest.TestCase):
 
 class Database_Tests(unittest.TestCase):
 	def test_num_movies(self):
-		conn = sqlite3.connect('Lundeen_finalproject.db')
+		conn = sqlite3.connect('finalproject.db')
 		cur = conn.cursor()
 		cur.execute('SELECT * FROM Movies');
 		result = cur.fetchall()
 		self.assertTrue(len(result)== 5)
 		conn.close()	
 	def test_num_tweets(self):
-		conn = sqlite3.connect('Lundeen_finalproject.db')
+		conn = sqlite3.connect('finalproject.db')
 		cur = conn.cursor()
 		cur.execute('SELECT * FROM Tweets');
 		result = cur.fetchall()
@@ -228,17 +228,17 @@ class Database_Tests(unittest.TestCase):
 
 class MovieClassTests(unittest.TestCase):
 	def test_type_title(self):
-		m= Movie("Titanic")
+		m= Movie(get_movie_data("Titanic"))
 		self.assertEqual(type(m.title), type("hi"))
 	def test_type_director(self):
-		m= Movie("Titanic")
-		self.assertEqual(type(m.director, type("hi")))
+		m= Movie(get_movie_data("Titanic"))
+		self.assertEqual(type(m.director), type("hi"))
 	def test_type_IMDB_rating(self):
-		m= Movie("Titanic")
-		self.assertEqual(type(m.IMDB_rating), type(8))
+		m= Movie(get_movie_data("Titanic"))
+		self.assertEqual(type(m.IMDB_rating), type("hi"))
 	def test_type_actors(self):
-		m= Movie("Titanic")
-		self.assertEqual(type(m.actors), type([]))
+		m= Movie(get_movie_data("Titanic"))
+		self.assertEqual(type(m.actors), type("hi"))
 
 if __name__ == "__main__":
 	unittest.main(verbosity=2)
