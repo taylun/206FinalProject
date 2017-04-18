@@ -47,7 +47,7 @@ except:
 	CACHE_DICTION = {}
 
 
-# Create a function get_tweets that makes a request to Twitter using Tweepy. This function will accept a search term and will cache the data that is returned. 	
+# Create a function get_tweets that makes a request to Twitter using Tweepy. This function will accept a search term and will cache the data that is returned by Tweepy in regards to the tweets about that term or access previously cached data. 	
 
 def get_tweets(search_term):
 	if search_term in CACHE_DICTION:
@@ -63,6 +63,7 @@ def get_tweets(search_term):
 
 	return CACHE_DICTION[search_term]
 
+#Create a function ger_user_info that makes a request to Twitter using Tweepy. This function will accept a string that represents a twitter handle for a specific user. The Tweepy request should return and cache the data pertaining to this user or access previously cached data.  
 
 def get_user_info(twitter_handle):
 	if twitter_handle in CACHE_DICTION:
@@ -80,6 +81,8 @@ def get_user_info(twitter_handle):
 	return CACHE_DICTION[twitter_handle]
 #print(get_user_info("Titanic"))
 
+
+#Create a function get_movie_data that accepts a string representing a movie title. The term will be used to make a request to the OMDB API for data pertaining to that movie. This function should cache the data returned from the request or access previously cached data from a prior request of the same movie.   
 def get_movie_data(movie_title):
 	if movie_title in CACHE_DICTION:
 		print("using cached data for", movie_title)
@@ -103,6 +106,8 @@ def get_movie_data(movie_title):
 	return CACHE_DICTION[movie_title]
 
 
+#Define a class, Movie. The class constructor should take a response dictionary from an OMDB request and use this to establish instance variables, title, director, IMDB rating, actors, number of languages and plot. 
+#This class should have a string method that access the instance variables to create a one line summary of the details of the movie.
 
 class Movie(object):
 	def __init__(self, movie_dict):
@@ -121,18 +126,20 @@ class Movie(object):
 
 
 
-
+#Create a connection to your database
 
 conn= sqlite3.connect('finalproject.db')
 cur= conn.cursor()
-#Users Table
+
+#Create a Users table within your database. This table should have columns for data user_id (primary key), screen_name, number of faves, and number of followers
+
 cur.execute('DROP TABLE IF EXISTS Users')
 table_spec2= "CREATE TABLE IF NOT EXISTS "
 
 table_spec2 += "Users (user_id TEXT PRIMARY KEY, screen_name TEXT, num_favs INTEGER, num_followers INTEGER)"
 cur.execute(table_spec2)
 
-#Movies Table
+#Create a Movies table in your database. This table should have columns for data concerning an id (your primary key), movie title, movie director, number languages, imdb rating, top actor, and plot
 
 cur.execute('DROP TABLE IF EXISTS Movies')
 table_spec3= "CREATE TABLE IF NOT EXISTS "
@@ -140,7 +147,7 @@ table_spec3= "CREATE TABLE IF NOT EXISTS "
 table_spec3+= "Movies (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, director TEXT, num_languages INTEGER, imdb_rating TEXT, top_actor TEXT, plot TEXT)"
 cur.execute(table_spec3)
 
-#Tweets table
+#Create a Tweets table in your database. This table should have columns for data concerning tweet text, user id(a reference to the Users table) , movie title (a reference to the Movies table), retweets, favorites,
 cur.execute('DROP TABLE IF EXISTS Tweets')
 table_spec = 'CREATE TABLE IF NOT EXISTS '
 
@@ -149,7 +156,7 @@ table_spec += 'text TEXT, user_id TEXT, movie_title TEXT, retweets INTEGER, favo
 cur.execute(table_spec)
 
 
-
+#Write code to insert data pertaining to the movie Titanic into the Movies table in  your database. 
 
 s= "INSERT INTO Movies VALUES (null, ?, ?, ?, ?, ?, ?)"
 Titanic= Movie(get_movie_data("Titanic"))
