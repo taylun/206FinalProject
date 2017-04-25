@@ -492,6 +492,7 @@ class get_movie_data_test(unittest.TestCase):
 		m= get_movie_data("Titanic")
 		self.assertEqual(type(m), type({}))
 
+
 class Database_Tests(unittest.TestCase):
 	def test_num_movies(self):
 		conn = sqlite3.connect('finalproject.db')
@@ -522,6 +523,10 @@ class MovieClassTests(unittest.TestCase):
 	def test_type_actors(self):
 		m= Movie(get_movie_data("Titanic"))
 		self.assertEqual(type(m.actors), type("hi"))
+
+class Sorted_Dictionary_Tests(unittest.TestCase):
+	def test_type_sorted_dict(self):
+		self.assertEqual(type(g_dict_sort), type([]))
 
 if __name__ == "__main__":
 	unittest.main(verbosity=2)
